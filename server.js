@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
  * DATABASE *
  ************/
 
-// const db = require('./models');
+const db = require('./models');
 
 /**********
  * ROUTES *
@@ -49,12 +49,14 @@ app.get('/api', (req, res) => {
   res.json({
     woopsIForgotToDocumentAllMyEndpoints: true, // CHANGE ME ;)
     message: "Welcome to my personal api! Here's what you need to know!",
-    documentationUrl: "https://github.com/example-username/express-personal-api/README.md", // CHANGE ME
-    baseUrl: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
+    documentationUrl: "https://github.com/Cyrusluke925/personal-api", 
+    baseUrl: "https://floating-crag-86445.herokuapp.com/",
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "POST", path: "/api/campsites", description: "E.g. Create a new campsite"} // CHANGE ME
+      {method: "GET", path: "/api/profile", description: "Data about me"},
+      {method: "GET", path: "/api/artists", description: "Data about artists"},
+      {method: "POST", path: "/api/artist", description: "Create a new artist"} // CHANGE ME
+
     ]
   })
 });
@@ -62,6 +64,46 @@ app.get('/api', (req, res) => {
 /**********
  * SERVER *
  **********/
+
+
+app.get('/api/profile', (req, res) => {
+  
+  res.json( {
+    name: 'Luke',
+    gitHub: 'https://github.com/Cyrusluke925?tab=repositories',
+    location: 'San Francisco',
+    siblings: ['katie', 'nick', 'leah']
+})
+
+
+})
+
+
+app.get('/api/artists', (req, res) => {
+
+  db.Artist.find({ }, (err, artists) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.json({data: artists});
+  })
+})
+
+
+app.post('/api/artists', (req, res) => {
+  let artistInput = req.body;
+  console.log(req);
+
+  db.Artist.create(artistInput, (err, savedArtist) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.json(savedArtist);
+  })
+})
+
+
+
 
 // listen on the port that Heroku prescribes (process.env.PORT) OR port 3000
 app.listen(process.env.PORT || 3000, () => {

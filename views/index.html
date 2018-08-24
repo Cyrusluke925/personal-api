@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="/styles/styles.css">
 
     <!-- VENDOR SCRIPTS -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" defer></script>
 
     <!-- APPLICATION SCRIPTS -->
-    <script src="/scripts/app.js"></script>
+    <script src="/scripts/app.js" defer></script>
   </head>
   <body>
     <div class="container">
@@ -25,5 +25,17 @@
         </div>
       </div>
     </div>
+<section class='form'>
+    <form id="theForm" class="form">
+      <input type='text' placeholder='Artist Name' name='name'>
+      <input type='text' placeholder='Artist Location' name='Location'>
+      <input type='text' placeholder='Top Album' name='topAlbum'>
+      <input type='text' placeholder='Artist Age' name='age'>
+      <button type='submit'>SUBMIT</button>
+    </form>
+  </section>
+  <section id="artistList">
+    
+  </section>
   </body>
 </html>
