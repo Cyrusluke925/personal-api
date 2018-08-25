@@ -105,17 +105,20 @@ app.post('/api/artists', (req, res) => {
   })
 })
 
-app.delete('/api/artists/:id', (req, res) => {
-  let artistId = req.param._id;
-
-  db.Artist.deleteOne ( {_id: artistId }, (err, deletedArtist) => {
+app.delete(`/api/artists/:id`, (req, res) => {
+  let artistId = req.params.id;
+  console.log(artistId)
+  db.Artist.deleteOne({_id: artistId }, (err, deletedArtist) => {
+    
     if (err) {
       return console.log(err)
     }
-    console.log(deletedArtist)
-    res.json(deletedTodo)
+
+    res.json(deletedArtist)
   })
 });
+
+
 
 
 

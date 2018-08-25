@@ -2,8 +2,9 @@ console.log("Sanity Check: JS is working!");
 $( document ).ready(function() {
     console.log( "ready!" );
 
-
+const baseUrl = 'api/artists'
 const allArtists = [];
+let theId;
 
 
 $.ajax({
@@ -23,21 +24,25 @@ $.ajax({
 
     var listArtists = function(){
     allArtists.forEach(function(artist){
-        $('ul').append(`<li class="listItem">${artist.name} is ${artist.age} and is located in ${artist.Location}. Top Album is ${artist.topAlbum}</li><button class="delete">DELETE</button>`)
+        $('ul').append(`<li class="listItem">${artist.name} is ${artist.age} and is located in ${artist.Location}. Top Album is ${artist.topAlbum}</li><button data-id="${artist._id}" class="delete">DELETE</button>`)
     });
     }
     
-            
-        $('.delete').on('click', function (element) {
+
+
+    
+        $('ul').on('click', '.delete', function (event) {
         
 
 
+        var deleteId = $(this).attr('data-id');
+
             $.ajax({
                 method: 'DELETE',
-                url:`/api/artists/:id`,
-                success: function onSuccess() {
+                url: baseUrl + '/' + deleteId,
+                success: window.location.reload()
                     
-                }
+                
             });
         });
 
