@@ -1,40 +1,73 @@
 console.log("Sanity Check: JS is working!");
+$( document ).ready(function() {
+    console.log( "ready!" );
 
-$(document).ready(function(){
 
+const allArtists = [];
 
 
 $.ajax({
     method: 'GET',
     url: '/api/artists',
-    success: function onSuccess(e) {
+    success: function getArtists(e) {
         e.data.forEach(element => {
-            $('#artistList').append(`<p>The artist, ${element.name}, is ${element.age} years old and is living in ${element.Location}. Their top album is ${element.topAlbum}</p id='delete'><button>delete</button>`)
+            allArtists.push(element);
         });
+        listArtists();
+        }
         
-        
-        
-    },
-    error: function onError() {
-        console.log('error')
-    }
-})
+    });
 
-
-
-
-
-
-
-$('form').on('submit', function(e) {
     
-    $.ajax({
-        method: 'POST',
-        url: '/api/artists/',
-        data: $(this).serialize(),
-       
 
-    })
 
-})
-})  
+    var listArtists = function(){
+    allArtists.forEach(function(artist){
+        $('ul').append(`<li class="listItem">${artist.name} is ${artist.age} and is located in ${artist.Location}. Top Album is ${artist.topAlbum}</li><button class="delete">DELETE</button>`)
+    });
+    }
+    
+            
+        $('.delete').on('click', function (element) {
+        
+
+
+            $.ajax({
+                method: 'DELETE',
+                url:`/api/artists/:id`,
+                success: function onSuccess() {
+                    
+                }
+            });
+        });
+
+
+
+    var deleteArtists = function() {
+        allArtists.forEach(function(artist){
+            
+        })
+    }
+
+
+
+
+
+        $('form').on('submit', function(e) {
+    
+            $.ajax({
+                method: 'POST',
+                url: '/api/artists/',
+                data: $(this).serialize(),
+        
+            })
+        
+        })
+});
+
+
+    
+
+
+
+
